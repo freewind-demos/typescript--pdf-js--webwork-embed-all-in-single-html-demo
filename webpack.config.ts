@@ -1,5 +1,6 @@
 import {Configuration} from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin';
 import path from 'path';
 
 const config: Configuration = {
@@ -27,23 +28,17 @@ const config: Configuration = {
         }
       }]
     }, {
-      test: /\.(gif|png|jpe?g|svg)$/i,
-      use: [
-        'file-loader',
-        {
-          loader: 'image-webpack-loader',
-          options: {
-            bypassOnDebug: true, // webpack@1.x
-            disable: true, // webpack@2.x and newer
-          },
-        },
-      ],
+      test: /\.(png|jpg|gif)$/,
+      loader: 'url-loader'
     }]
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'index.html'
-    })
+    }),
+    new ScriptExtHtmlWebpackPlugin({
+      inline: ['bundle.js']
+    }),
   ]
 }
 
